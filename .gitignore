@@ -148,3 +148,8 @@ cython_debug/
 .history/
 
 # End of https://mrkandreev.name/snippets/gitignore-generator/#Python,VisualStudioCode
+
+# Exclude CSV
+*.csv
+
+Pipfile.lock
