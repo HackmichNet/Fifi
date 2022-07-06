@@ -61,14 +61,14 @@ class App:
     def get_number_of_X_with_dangerours_path_to_DA(self, source, da, domain, exclude_admincount = False):
         with self.driver.session() as session:
             if exclude_admincount:
-                query = f"MATCH shortestPath((u:{source} {{admincount:false}}) -[r:MemberOf|HasSession|AdminTo|AllExtendedRights|AddMember|ForceChangePassword|GenericAll|GenericWrite|Owns|WriteDacl|WriteOwner|ExecuteDCOM|AllowedToDelegate|ReadLAPSPassword|Contains|GpLink|AddAllowedToAct|AllowedToAct*1..]->(g:Group {{name:'{da}@{domain}'}})) return COUNT(DISTINCT(u))"
+                query = f"MATCH shortestPath((u:{source} {{admincount:false}}) -[r:MemberOf|HasSession|AdminTo|AllExtendedRights|AddMember|ForceChangePassword|GenericAll|GenericWrite|Owns|WriteDacl|WriteOwner|ExecuteDCOM|AllowedToDelegate|ReadLAPSPassword|Contains|GpLink|AddAllowedToAct|AllowedToAct|SQLAdmin|ReadGMSAPassword|HasSIDHistory|AddSelf|WriteSPN|AddKeyCredentialLink*1..]->(g:Group {{name:'{da}@{domain}'}})) return COUNT(DISTINCT(u))"
             else: 
-                query = f"MATCH shortestPath((u:{source}) -[r:MemberOf|HasSession|AdminTo|AllExtendedRights|AddMember|ForceChangePassword|GenericAll|GenericWrite|Owns|WriteDacl|WriteOwner|ExecuteDCOM|AllowedToDelegate|ReadLAPSPassword|Contains|GpLink|AddAllowedToAct|AllowedToAct*1..]->(g:Group {{name:'{da}@{domain}'}})) return COUNT(DISTINCT(u))"
+                query = f"MATCH shortestPath((u:{source}) -[r:MemberOf|HasSession|AdminTo|AllExtendedRights|AddMember|ForceChangePassword|GenericAll|GenericWrite|Owns|WriteDacl|WriteOwner|ExecuteDCOM|AllowedToDelegate|ReadLAPSPassword|Contains|GpLink|AddAllowedToAct|AllowedToAct|SQLAdmin|ReadGMSAPassword|HasSIDHistory|AddSelf|WriteSPN|AddKeyCredentialLink*1..]->(g:Group {{name:'{da}@{domain}'}})) return COUNT(DISTINCT(u))"
             result = session.read_transaction(self._get_number_of, query)
             return result
 
     def get_average_attack_Path_len_of_X_to_DA_dangerous_perms(self, source, da, domain):
-            edge = "r:MemberOf|HasSession|AdminTo|AllExtendedRights|AddMember|ForceChangePassword|GenericAll|GenericWrite|Owns|WriteDacl|WriteOwner|ExecuteDCOM|AllowedToDelegate|ReadLAPSPassword|Contains|GpLink|AddAllowedToAct|AllowedToAct*1.."
+            edge = "r:MemberOf|HasSession|AdminTo|AllExtendedRights|AddMember|ForceChangePassword|GenericAll|GenericWrite|Owns|WriteDacl|WriteOwner|ExecuteDCOM|AllowedToDelegate|ReadLAPSPassword|Contains|GpLink|AddAllowedToAct|AllowedToAct|SQLAdmin|ReadGMSAPassword|HasSIDHistory|AddSelf|WriteSPN|AddKeyCredentialLink*1.."
             return self.get_average_attack_Path_len_of_X_to_DA(source, da, domain, edge)
 
     def get_average_attack_Path_len_of_X_to_DA(self, source, da, domain, edge = "r*1.."):
