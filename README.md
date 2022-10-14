@@ -1,3 +1,3 @@
 # Fifi
 
-Is a small script to automate some often used BloodHOund queries.
+Is a small script to automate some often used BloodHound queries.
